@@ -1,23 +1,54 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
+  const [allEmployees, setAllEmployees] = useState([]);
+
+  // function getEmployees() {
+  //   fetch(`${process.env.REACT_APP_API}/employees`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       const transformedData = data.employees.map((item) => {
+  //         return {
+  //           id: item._id,
+  //           firstname: item.firstname,
+  //           lastname: item.lastname,
+  //         };
+  //       });
+  //       console.log(data.employees);
+  //       setEmployees(transformedData);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API}/employees`)
+      .then((response) => response.json())
+      .then((data) => {
+        const transformedData = data.employees.map((item) => {
+          return {
+            id: item._id,
+            firstname: item.firstname,
+            lastname: item.lastname,
+            badge: item.badge,
+          };
+        });
+        setAllEmployees(transformedData);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {allEmployees.length === 0 ? (
+        <p>Loading...</p>
+      ) : (
+        allEmployees.map((employee) => (
+          <p
+            key={employee.id}
+          >{`Badge #: ${employee.badge}:  ${employee.lastname}, ${employee.firstname}`}</p>
+        ))
+      )}
     </div>
   );
 }
