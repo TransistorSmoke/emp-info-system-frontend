@@ -1,25 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
+import Card from './components/Card';
+import Employee from './components/Employee';
+import Navbar from './components/Navbar';
 
 function App() {
   const [allEmployees, setAllEmployees] = useState([]);
-
-  // function getEmployees() {
-  //   fetch(`${process.env.REACT_APP_API}/employees`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       const transformedData = data.employees.map((item) => {
-  //         return {
-  //           id: item._id,
-  //           firstname: item.firstname,
-  //           lastname: item.lastname,
-  //         };
-  //       });
-  //       console.log(data.employees);
-  //       setEmployees(transformedData);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API}/employees`)
@@ -39,8 +25,8 @@ function App() {
   }, []);
 
   return (
-    <div>
-      {allEmployees.length === 0 ? (
+    <div className=" mx-auto font-thin border-2">
+      {/* {allEmployees.length === 0 ? (
         <p>Loading...</p>
       ) : (
         allEmployees.map((employee) => (
@@ -48,7 +34,12 @@ function App() {
             key={employee.id}
           >{`Badge #: ${employee.badge}:  ${employee.lastname}, ${employee.firstname}`}</p>
         ))
-      )}
+      )} */}
+
+      <Navbar />
+
+      <Card />
+      <Employee employees={allEmployees} />
     </div>
   );
 }
