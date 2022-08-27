@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import Card from './components/Card';
-import Employee from './components/Employee';
+import EmployeeList from './components/EmployeeList';
 import Navbar from './components/Navbar';
 
 function App() {
@@ -17,6 +16,7 @@ function App() {
             firstname: item.firstname,
             lastname: item.lastname,
             badge: item.badge,
+            department: item.department,
           };
         });
         setAllEmployees(transformedData);
@@ -38,8 +38,13 @@ function App() {
 
       <Navbar />
 
-      <Card />
-      <Employee employees={allEmployees} />
+      <div className="border-emerald-300 w-2/5 mx-auto">
+        <h1 className="text-center my-10 text-3xl font-bold uppercase text-gray-500">
+          Employee Profile
+        </h1>
+
+        <EmployeeList employees={allEmployees} />
+      </div>
     </div>
   );
 }
